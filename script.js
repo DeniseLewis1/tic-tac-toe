@@ -1,5 +1,6 @@
 const gameBoard = document.querySelector(".gameboard");
 const infoDisplay = document.querySelector(".info");
+const playButton = document.querySelector(".play-again");
 const startCells = ["", "", "", "", "", "", "", "", ""];
 let go = "circle";
 infoDisplay.textContent = "Circle goes first";
@@ -38,6 +39,7 @@ function checkScore() {
         if (circleWins) {
             infoDisplay.textContent = "Circle Wins!";
             allSquares.forEach(square => square.replaceWith(square.cloneNode(true)));
+            playAgain();
             return;
         }
 
@@ -46,11 +48,36 @@ function checkScore() {
         if (crossWins) {
             infoDisplay.textContent = "Cross Wins!";
             allSquares.forEach(square => square.replaceWith(square.cloneNode(true)));
+            playAgain();
+            return;
+        }
+
+        let turnsTaken = 0;
+        allSquares.forEach(square => {
+            if(square.hasChildNodes()) turnsTaken++;
+        });
+
+        if (turnsTaken === 9 && !infoDisplay.textContent.includes("Wins")) {
+            infoDisplay.textContent = "Game Over!";
+            playAgain();
             return;
         }
     });
+}
 
+function playAgain() {
+    playButton.classList.remove("hide");
+    playButton.addEventListener("click", clearBoard);
     
+}
+
+function clearBoard() {
+    const allSquares = document.querySelectorAll(".square");
+    allSquares.forEach(square => square.remove());    
+    playButton.classList.add("hide");
+    go = "circle";
+    infoDisplay.textContent = "Circle goes first";
+    createBoard();
 }
 
 createBoard();

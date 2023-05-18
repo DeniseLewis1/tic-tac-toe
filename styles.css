@@ -62,3 +62,14 @@ body {
     margin-top: -15%;
     width: 100%;
 }
+
+.hide {
+    display: none;
+}
+
+.play-again {
+    color: white;
+    background-color:black;
+    padding: 5px;
+    font-weight: bold;
+}
